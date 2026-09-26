@@ -19,7 +19,7 @@
       const payload={
         nome:form.nome.value.trim(),
         whatsapp:form.whatsapp.value.trim(),
-        email:form.email.value.trim(),
+        email:form.email ? form.email.value.trim() : '',
         servicoResultado:service,
         origem:form.origem.value,
         etapa:'Novo'
