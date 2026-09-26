@@ -1,5 +1,5 @@
 (function(){
-  const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbw9AOUITXXFUgxs2dc_9IkSCF733FUKri7FkLiKCpqal2YHhH4ftuk-ykIO0gIm1tpy/exec";
+  const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbx_c00-BZDd4ulwCfNsAFZh_h5IjzW0qradQtN0l97lbqE6CG8Noi2XHhA7NDoPsMPE/exec";
   const forms=document.querySelectorAll('.capture-form');
 
   forms.forEach(form=>{
@@ -11,18 +11,21 @@
       const feedback=form.querySelector('.form-feedback');
       const service=form.dataset.service;
       const destination=form.dataset.destination||'';
+      const emailField=form.elements.email;
 
-      // Pré-abre a nova aba durante a ação do usuário para evitar bloqueio de pop-up.
       const destinationWindow=destination ? window.open('about:blank','_blank') : null;
       if(destinationWindow) destinationWindow.opener=null;
 
       const payload={
         nome:form.nome.value.trim(),
         whatsapp:form.whatsapp.value.trim(),
-        email:form.email ? form.email.value.trim() : '',
+        email:emailField ? emailField.value.trim() : '',
         servicoResultado:service,
         origem:form.origem.value,
-        etapa:'Novo'
+        etapa:'Novo',
+        consentimento:form.consentimento.checked ? 'sim' : 'nao',
+        pagina:location.href,
+        dataHora:new Date().toISOString()
       };
 
       button.disabled=true;
@@ -35,6 +38,8 @@
           headers:{'Content-Type':'text/plain;charset=utf-8'},
           body:JSON.stringify(payload)
         });
+
+        form.reset();
 
         if(service==='psicoterapia'){
           if(destinationWindow) destinationWindow.close();
