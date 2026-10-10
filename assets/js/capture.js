@@ -48,7 +48,8 @@
           offer.scrollIntoView({behavior:'smooth',block:'start'});
           feedback.textContent='Cadastro concluído. Confira abaixo o valor e as condições.';
         }else if(destination){
-          feedback.textContent='Cadastro concluído. A oferta foi aberta em uma nova aba.';
+          feedback.textContent='Dados enviados. O WhatsApp foi aberto para continuar o atendimento. Se não abrir, use o link abaixo.';
+          const fallback=document.createElement('a'); fallback.href=destination; fallback.target='_blank'; fallback.rel='noopener noreferrer'; fallback.textContent='Abrir WhatsApp'; feedback.appendChild(document.createTextNode(' '));feedback.appendChild(fallback);
           if(destinationWindow){
             destinationWindow.location.replace(destination);
           }else{
