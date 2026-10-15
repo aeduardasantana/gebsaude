@@ -13,7 +13,7 @@
       const destination=form.dataset.destination||'';
       const emailField=form.elements.email;
 
-      const destinationWindow=destination ? window.open('about:blank','_blank') : null;
+      const destinationWindow=destination && service!=='telemedicina' ? window.open('about:blank','_blank') : null;
       if(destinationWindow) destinationWindow.opener=null;
 
       const payload={
@@ -41,7 +41,11 @@
 
         form.reset();
 
-        if(service==='psicoterapia'){
+        if(service==='telemedicina'){
+          const offer=document.getElementById('oferta-telemedicina');
+          if(offer){offer.hidden=false;offer.scrollIntoView({behavior:'smooth',block:'start'});}
+          feedback.textContent='Cadastro enviado. Confira os planos e os valores abaixo.';
+        }else if(service==='psicoterapia'){
           if(destinationWindow) destinationWindow.close();
           const offer=document.getElementById('oferta-psicoterapia');
           offer.hidden=false;
