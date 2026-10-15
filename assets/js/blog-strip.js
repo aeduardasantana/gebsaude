@@ -33,6 +33,6 @@
     const data=e.data;
     if(!data||data.type!=="geb-blog-embed-height")return;
     const h=Number(data.height);
-    if(Number.isFinite(h)&&h>=100&&h<=5000)frame.style.height=Math.ceil(h)+"px";
+    if(Number.isFinite(h)&&h>=100&&h<=2500){const next=Math.ceil(h);if(frame.style.height!==next+"px")frame.style.height=next+"px";}
   });
 })();
